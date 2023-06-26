@@ -100,7 +100,7 @@ cte1 AS (
 	SELECT 
 		*,lag(total_amount) OVER( PARTITION BY card_type,exp_type order by yr,mth)  AS pre_mnth_amount 
 	FROM cte)
-SELECT card_type,exp_type,mom FROM (SELECT *,(total_amount-pre_mnth_amount) AS mom FROM cte1
+SELECT card_type,exp_type,mom FROM (SELECT *,(total_amount-pre_mnth_amount)/pre_mnth_amount AS mom FROM cte1
 WHERE yr=2014 AND mth=01 AND pre_mnth_amount IS NOT NULL ) x ORDER BY mom DESC LIMIT 1;
 
 
